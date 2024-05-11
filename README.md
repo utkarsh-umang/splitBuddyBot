@@ -1,1 +1,1 @@
-# splitsbot
+# splitbot
