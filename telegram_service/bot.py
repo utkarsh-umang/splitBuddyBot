@@ -1,8 +1,7 @@
 from telegram import Update, Bot
-from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackContext
+from telegram.ext import CommandHandler, CallbackContext
 import logging
 # from core_service.settings import TELEGRAM_KEY
-import telegram.ext.filters as Filters
 from telegram.ext import Application
 TELEGRAM_KEY = "6503310536:AAGlqVv7dJZllqtVl6nl3szclPcHfPTrYJE"
 
@@ -41,22 +40,16 @@ def main() -> None:
     bot = initialize_bot()
     if bot:
         print(bot.getMe())
-        # updater = Updater(bot.token, use_context=True)
         dp = Application.builder().token(TELEGRAM_KEY).build()
-        
-        # Get the dispatcher to register handlers
-        
         
         # Register handlers
         dp.add_handler(CommandHandler("start", start))
         dp.add_handler(CommandHandler("help", help_command))
-        # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
         
         # Log all errors
         dp.add_error_handler(error)
         
         # Start the Bot
-        # updater.start_polling()
         dp.run_polling()
         
 
