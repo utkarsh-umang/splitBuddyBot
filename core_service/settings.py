@@ -81,6 +81,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'expense_service.User'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
