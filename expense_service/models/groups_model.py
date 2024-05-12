@@ -1,5 +1,5 @@
 from django.db import models
-from .users import User
+from .users_model import User
 
 class Groups(models.Model):
     group_name = models.CharField(max_length=100)

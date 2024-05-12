@@ -1,6 +1,7 @@
 from telegram import Update, Bot
 from telegram.ext import CommandHandler, CallbackContext, ChatMemberHandler
 import logging
+from django.core.management.base import BaseCommand
 # from core_service.settings import TELEGRAM_KEY
 from telegram.ext import Application
 TELEGRAM_KEY = "6503310536:AAGlqVv7dJZllqtVl6nl3szclPcHfPTrYJE"
@@ -29,13 +30,16 @@ async def help_command(update: Update, context: CallbackContext) -> None:
 # Adding our bot to a group
 async def chat_member(update:  Update, context: CallbackContext) -> None:
     result = update.my_chat_member
-    if result.old_chat_member.status != 'member' and result.new_chat_member.status == 'member' and result.new_chat_member.user.id == context.bot.id:
+    print("update being printed:-",update,"\n")
+    print("context is printed here:-",context,"\n")
+    if result.new_chat_member.status == 'member' and result.new_chat_member.user.id == context.bot.id:
         await context.bot.send_message(
             chat_id=result.chat.id,
             text="Hey, Thanks for adding me to the group!\n"
                  "Please! Give me Admin rights to proceed further.\n"
                  "Type /help for guidance."
         )
+
 
 # Message handler
 async def echo(update: Update, context: CallbackContext) -> None:
@@ -67,3 +71,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
+class Command(BaseCommand):
+    def handle(self,*args,**options):    
+        main()

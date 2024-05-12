@@ -1,6 +1,6 @@
 from django.db import models
-from .expenses import Expenses
-from .users import User
+from .expenses_model import Expenses
+from .users_model import User
 
 class ExpenseSplits(models.Model):
     expense = models.ForeignKey(Expenses, on_delete=models.CASCADE)

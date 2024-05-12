@@ -1,6 +1,6 @@
 from django.db import models
-from .groups import Groups
-from .users import User
+from .groups_model import Groups
+from .users_model import User
 
 class Expenses(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
