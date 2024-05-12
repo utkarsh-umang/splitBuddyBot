@@ -1,5 +1,5 @@
 from telegram import Update, Bot
-from telegram.ext import CommandHandler, CallbackContext
+from telegram.ext import CommandHandler, CallbackContext, ChatMemberHandler
 import logging
 # from core_service.settings import TELEGRAM_KEY
 from telegram.ext import Application
@@ -21,10 +21,21 @@ def initialize_bot():
 
 # Command handlers
 async def start(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text('Hello! This is your friendly expense splitter bot. BSDK')
+    await update.message.reply_text('Hello! This is your friendly expense splitter bot.')
 
 async def help_command(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text("Send me a message and I'll echo it back!")
+    await update.message.reply_text("I am your friendly splitter bot to help you and your friends split expenses easily and effectively.")
+
+# Adding our bot to a group
+async def chat_member(update:  Update, context: CallbackContext) -> None:
+    result = update.my_chat_member
+    if result.old_chat_member.status != 'member' and result.new_chat_member.status == 'member' and result.new_chat_member.user.id == context.bot.id:
+        await context.bot.send_message(
+            chat_id=result.chat.id,
+            text="Hey, Thanks for adding me to the group!\n"
+                 "Please! Give me Admin rights to proceed further.\n"
+                 "Type /help for guidance."
+        )
 
 # Message handler
 async def echo(update: Update, context: CallbackContext) -> None:
@@ -45,7 +56,8 @@ def main() -> None:
         # Register handlers
         dp.add_handler(CommandHandler("start", start))
         dp.add_handler(CommandHandler("help", help_command))
-        
+        dp.add_handler(ChatMemberHandler(chat_member))
+
         # Log all errors
         dp.add_error_handler(error)
         
