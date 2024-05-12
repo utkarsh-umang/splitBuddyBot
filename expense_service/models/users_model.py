@@ -7,4 +7,9 @@ class User(AbstractUser):
     # group_id = models.ForeignKey(Groups, on_delete=models.SET_NULL, null=False, blank=False)
     owed_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     lended_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    first_name = models.CharField(max_length=100,null=False,blank=False)
+    last_name = models.CharField(max_length=100,null=True,blank=True)
+    telegram_user_id = models.CharField(max_length=100,null=True,blank=True)
+    user_name = models.CharField(max_length=100,null=True,blank=True)
+
     
