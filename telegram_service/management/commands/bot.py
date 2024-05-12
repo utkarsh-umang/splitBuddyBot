@@ -101,14 +101,19 @@ async def chat_member(update:  Update, context: CallbackContext) -> None:
         logger.info("Group Added.")
     else: 
         logger.info("Group Updated.")
-    group_member, member_created = await sync_to_async(GroupMembers.objects.get_or_create)(
-        group=group,
-        user=user_pk
-    )
-    if member_created:
-        logger.info("Group Member Added.")
-    else: 
-        logger.info("Group Member Updated.")
+    try:
+        import traceback
+        group_member, member_created = await sync_to_async(GroupMembers.objects.get_or_create)(
+            group=group,
+            user=user_pk
+        )
+        if member_created:
+            logger.info("Group Member Added.")
+        else: 
+            logger.info("Group Member Updated.")
+    except Exception as e:
+        traceback.print_exc()
+        print("exception:---",e)
     
 
 
