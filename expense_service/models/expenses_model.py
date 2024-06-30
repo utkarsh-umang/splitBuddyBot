@@ -9,4 +9,7 @@ class Expenses(models.Model):
     paid_by = models.ForeignKey(User, on_delete=models.CASCADE)
     currency = models.CharField(max_length=3)
     group = models.ForeignKey(Groups, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.description} - {self.amount}"
     
