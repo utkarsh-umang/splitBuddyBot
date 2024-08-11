@@ -131,7 +131,7 @@ async def group_info_command(update: Update, context: CallbackContext) -> None:
         group_members = "List of all the members in the group!\n\n"
         for member in members:
             user = await sync_to_async(User.objects.get)(id=member.user_id)
-            group_members += f"{user.first_name} (@{user.user_name})\n"
+            group_members += f"{user.first_name} {user.last_name or ''}\n"
         group_members += "If anyone is missing please press /start"
         await update.message.reply_text(group_members)
     except Groups.DoesNotExist:
